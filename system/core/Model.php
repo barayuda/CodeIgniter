@@ -51,14 +51,10 @@ class CI_Model {
 	/**
 	 * Class constructor
 	 *
+	 * @link	https://github.com/bcit-ci/CodeIgniter/issues/5332
 	 * @return	void
 	 */
-	public function __construct()
-	{
-		log_message('info', 'Model Class Initialized');
-	}
-
-	// --------------------------------------------------------------------
+	public function __construct() {}
 
 	/**
 	 * __get magic

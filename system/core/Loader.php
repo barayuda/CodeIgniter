@@ -182,7 +182,7 @@ class CI_Loader {
 	 * Loads and instantiates libraries.
 	 * Designed to be called from application controllers.
 	 *
-	 * @param	string	$library	Library name
+	 * @param	mixed	$library	Library name
 	 * @param	array	$params		Optional parameters to pass to the library class constructor
 	 * @param	string	$object_name	An optional object name to assign to
 	 * @return	object
@@ -226,7 +226,7 @@ class CI_Loader {
 	 *
 	 * Loads and instantiates models.
 	 *
-	 * @param	string	$model		Model name
+	 * @param	mixed	$model		Model name
 	 * @param	string	$name		An optional object name to assign to
 	 * @param	bool	$db_conn	An optional database connection configuration to initialize
 	 * @return	object
@@ -303,6 +303,8 @@ class CI_Loader {
 				{
 					throw new RuntimeException($app_path."Model.php exists, but doesn't declare class CI_Model");
 				}
+
+				log_message('info', 'CI_Model class loaded');
 			}
 			elseif ( ! class_exists('CI_Model', FALSE))
 			{
@@ -317,6 +319,8 @@ class CI_Loader {
 				{
 					throw new RuntimeException($app_path.$class.".php exists, but doesn't declare class ".$class);
 				}
+
+				log_message('info', config_item('subclass_prefix').'Model class loaded');
 			}
 		}
 
@@ -350,7 +354,9 @@ class CI_Loader {
 		}
 
 		$this->_ci_models[] = $name;
-		$CI->$name = new $model();
+		$model = new $model();
+		$CI->$name = $model;
+		log_message('info', 'Model "'.get_class($model).'" initialized');
 		return $this;
 	}
 
